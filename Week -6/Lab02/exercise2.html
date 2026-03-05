@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Helpers Exercise 2</title>
+</head>
+
+<body>
+  <social></social>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+  <script id="Exercise2" type="text/x-handlebars-template">
+    <p> {{name}} on {{date}} <br> {{{comment}}}</p>
+  {{#if social}}
+  <h2>Social media</h2>
+ <ul>
+    {{#each social}}
+    <li>{{site}} {{name}}</li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <h2> No social media</h2>
+  {{/if}}
+  </script>
+  <script>
+    const data = {
+      name: "Jack",
+      date: "12/03/25",
+      comment: "This is a really <strong> awesome </strong> tutorial. Thanks.",
+      social: [
+        {
+          site: "Twitter",
+          name: "Jack_Franklin"
+        },
+        {
+          site: "Github",
+          name: "jackfranklin"
+        }
+      ]
+    }
+
+    let template = Handlebars.compile(document.querySelector('#Exercise2').innerHTML);
+
+    let output = template(data);
+
+    document.querySelector('social').innerHTML = output;
+  </script>
+</body>
+
+</html>
