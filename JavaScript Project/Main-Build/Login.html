@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>AdamPhelan Login</title>
+
+    <style>
+        body {
+             background: black;
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <div id="container">
+        
+        <main id="bg">
+            <div class="LoginBox">
+                <h1>LOGIN</h1>
+                <section id="form">
+                    <form action="LoggedIn.html" method="get" id="login">
+                        <div class="form-row">
+                            <label for="userEmail">Email</label>
+                            <input type="email" name="userEmail" id="userEmail" required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"
+                                title="Please enter a valid email address, @ symbol followed by a domain is required.">
+                        </div>
+
+                        <div class="form-row">
+                            <label for="userPassword">Password</label>
+                            <input type="password" name="userPassword" id="userPassword" required
+                                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$"
+                                title="Please enter a valid Password, Password must contain a capital letter, Lowercase letters and Numbers and 8 characters long.">
+                        </div>
+                        <button type="submit" id="submitButton">Log in</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+
+</script>
+
+</html>

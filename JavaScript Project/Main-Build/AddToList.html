@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Add to My List</title>
+</head>
+<body class="backgroundList">
+    <div class="container">
+        <header class="listHead">
+            <h1>Add Movie/Show</h1>
+            <nav class="menu">
+                <a class="link" href="HomeLoggedIn.html">Home</a>
+                <a class="link" href="MyList.html">My List</a>
+            </nav>
+        </header>
+
+        <main class="option-box form-container">
+            <form id="addMovieForm">
+                <label>Title:</label>
+                <input type="text" id="title" placeholder="Enter title..." required>
+
+                <label>Image URL:</label>
+                <input type="url" id="imageUrl" placeholder="Paste image link here (e.g. https://...)">
+
+                <label>Score (1-10):</label>
+                <input type="number" id="movieScore" min="1" max="10" required>
+
+                <label>Status:</label>
+                <select id="status">
+                    <option value="Watched">Watched</option>
+                    <option value="Not Watched">Not Watched</option>
+                </select>
+
+                <button type="submit" class="btn-submit">Add to List</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('addMovieForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const movie = {
+                id: Date.now(),
+                title: document.getElementById('title').value,
+                img: document.getElementById('imageUrl').value || 'images/default-poster.jpg',
+                score: parseInt(document.getElementById('movieScore').value),
+                status: document.getElementById('status').value
+            };
+
+            const myList = JSON.parse(localStorage.getItem('myWatchList')) || [];
+            myList.push(movie);
+            localStorage.setItem('myWatchList', JSON.stringify(myList));
+
+            alert('Added successfully!');
+            window.location.href = 'MyList.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>My Watchlist</title>
+</head>
+
+<body class="backgroundList">
+    <div class="container">
+        <header class="listHead">
+            <h1>MyWatchList</h1>
+            <nav class="menu">
+                <a class="link" href="HomeLoggedIn.html">Home</a>
+                <a class="activeLink" href="MyList.html">My List</a>
+            </nav>
+        </header>
+
+        <main class="option-box">
+            <img class="banner-img" src="images/watchListBG.jpg" alt="Sakura">
+
+
+            <section class="listButtons">
+                <button id="allWatch">All</button>
+                <button id="watched">Watched</button>
+                <button id="notWatched">Not Watched</button>
+                <button id="score">Sort by Score</button>
+                <button class="btn-add-new" onclick="window.location.href='AddToList.html'">+ Add New</button>
+            </section>
+
+            <nav class="search-container">
+                <form id="searchForm">
+                    <input type="text" id="search" placeholder="Search Movie/ Series">
+                </form>
+            </nav>
+
+            <div id="movie" class="card-grid"></div>
+        </main>
+    </div>
+
+<script>
+    const movieContainer = document.getElementById('movie');
+    let currentList = JSON.parse(localStorage.getItem('myWatchList')) || [];
+    
+    let sortOrder = 'high'; 
+
+    function displayMovies(movies) {
+        movieContainer.innerHTML = '';
+        movieContainer.className = 'card-grid';
+
+        movies.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.innerHTML = `
+                <img src="${item.img || 'images/placeholder.jpg'}" alt="${item.title}" class="card-img">
+                <h3>${item.title}</h3>
+                <p>Score: <strong>${item.score}/10</strong></p>
+                <p>Status: <span class="${item.status === 'Watched' ? 'status-green' : 'status-red'}">${item.status}</span></p>
+                <button class="delete-btn" onclick="deleteMovie(${item.id})">Remove</button>
+            `;
+            movieContainer.appendChild(card);
+        });
+    }
+
+    document.getElementById('score').onclick = () => {
+        if (sortOrder === 'high') {
+            currentList.sort((a, b) => a.score - b.score);
+            sortOrder = 'low';
+            document.getElementById('score').innerText = "Score: Low-High";
+        } else {
+            currentList.sort((a, b) => b.score - a.score);
+            sortOrder = 'high';
+            document.getElementById('score').innerText = "Score: High-Low";
+        }
+        displayMovies(currentList);
+    };
+
+   
+    document.getElementById('allWatch').onclick = () => displayMovies(currentList);
+    
+    document.getElementById('watched').onclick = () => {
+        displayMovies(currentList.filter(m => m.status === 'Watched'));
+    };
+    
+    document.getElementById('notWatched').onclick = () => {
+        displayMovies(currentList.filter(m => m.status === 'Not Watched'));
+    };
+
+  
+    document.getElementById('search').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = currentList.filter(m => m.title.toLowerCase().includes(term));
+        displayMovies(filtered);
+    });
+
+    function deleteMovie(id) {
+        currentList = currentList.filter(m => m.id !== id);
+        localStorage.setItem('myWatchList', JSON.stringify(currentList));
+        displayMovies(currentList);
+    }
+
+    displayMovies(currentList);
+</script>
+</body>
+
+</html>

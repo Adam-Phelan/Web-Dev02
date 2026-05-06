@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Adam Phelan - JavaScript Assignment</title>
+
+    <style>
+        
+    </style>
+
+</head>
+
+
+<body class="background">
+
+    <div class="container">
+        <header class="head">
+            <h1>MyWatchList</h1>
+            
+            <nav class="menu">
+                <a class="link" href="Login.html" target="_blank">Login</a>
+            </nav>
+        </header>
+
+        <main class="flex-box">
+            <div class="slideShow">
+                <h2 class="topMovies">Top Rated Movies 2026</h2>
+                <div class="img-wrap">
+                    <img src="images/ProjectHailMary.jpg">
+                    <img src="images/josephine.jpg">
+                    <img src="images/Monkey-in-a-cage.jpg">
+                    <img src="images/Micheal.jpg">
+                    <img src="images/in-the-grey.jpg">
+                </div>
+                <button class="prev">‹</button>
+                <button class="next">›</button>
+            </div>
+            <div class="movie-info">
+                <h3 class="topInfo">Overview: </h3>
+                <p id="movieDescription">Loading movie overview...</p>
+            </div>
+        </main>
+
+        <script>
+            const prev = document.querySelector('.prev');
+            const next = document.querySelector('.next');
+            const wrap = document.querySelector('.img-wrap');
+            const imgs = document.querySelectorAll('.img-wrap img');
+            const descriptionText = document.getElementById('movieDescription');
+            const movieData = [
+                {
+                    title: "Project Hail Mary",
+                    plot: "A science teacher wakes up alone on a spaceship. As his memory returns, he uncovers a mission to stop a mysterious substance killing Earth's sun, and realizes that an unexpected friendship may be the key.",
+                    directors: "Phil Lord, Christopher Miller",
+                    cast: "Ryan Gosling, Sandra Hüller, James Ortiz"
+                },
+                {
+                    title: "Josephine",
+                    plot: "After 8-year-old Josephine accidentally witnesses a crime in Golden Gate Park, she acts out in search of a way to regain control of her safety, while adults are helpless to console her.",
+                    directors: "Beth de Araujo",
+                    cast: "Masson Reeves, Channing Tatum, Gemma Chan"
+                },
+                {
+                    title: "Monkey in a Cage",
+                    plot: "TV star Samar's life spirals when his ex Gayatri accuses him of rape after he blocks contact with her. Despite his new relationship with Khushi, he faces arrest and encounters a corrupt justice system.",
+                    directors: "Anurag Kashyap",
+                    cast: "Gagan Ahuja, Saba Azad, Aamir Aziz"
+                },
+                {
+                    title: "Micheal",
+                    plot: "The early life of the famous musician Michael Jackson, known as the King of Pop.",
+                    directors: "Antoine Fuqua",
+                    cast: "Jaafar Jackson, Nia Long, Colman Domingo"
+                },
+                {
+                    title: "In the Grey",
+                    plot: "A covert team of elite operatives are living in the shadows. When a ruthless despot steals a billion-dollar fortune, they're sent to take it back-an impossible heist that erupts into a deadly game of strategy, deception and survival.",
+                    directors: "Guy Ritchie",
+                    cast: "Jake Gyllenhaal, Henry Cavill, Eiza González"
+                }
+            ];
+
+            let idx = 0;
+
+            const showImg = () => {
+                if (idx >= imgs.length) idx = 0;
+                if (idx < 0) idx = imgs.length - 1;
+
+                wrap.style.transform = `translateX(-${idx * 100}%)`;
+
+                const movie = movieData[idx];
+                descriptionText.innerHTML = `
+            <strong>${movie.title}</strong><br>
+            <p>${movie.plot}</p>
+            <p><strong>Directors:</strong> ${movie.directors}</p>
+            <p><strong>Cast:</strong> ${movie.cast}</p>`;
+            };
+
+            next.addEventListener('click', () => {
+                idx++;
+                showImg();
+            });
+
+            prev.addEventListener('click', () => {
+                idx--;
+                showImg();
+            });
+
+            showImg();
+        </script>
+
+    </div>
+</body>
+
+</html>
